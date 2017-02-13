@@ -1,0 +1,11 @@
+{
+  "name": "evolve-name",
+  "version": "1.0.0",
+  "description": "GA to evolve your name",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nathaniel Kitzke",
+  "license": "ISC"
+}

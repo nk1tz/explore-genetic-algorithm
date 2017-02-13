@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Name Evolver</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Caveat+Brush|Droid+Sans" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="top-bar">
+            <div class="input__container">
+                <h2>Your name</h2>
+                <div class="name-input">
+                    <input type="text" id="textBox" />
+                    <button id="start-evolve">Evolve Me</button>
+                </div>
+            </div>
+            <div class="parameter">
+                mutation rate
+                <input type="number" id="mutation-rate" />
+            </div>
+            <div class="parameter">
+                parents per child
+                <input type="number" id="sex-number" />
+            </div>
+            <div class="parameter">
+                population size
+                <input type="number" id="pop-size" />
+            </div>
+            <div class="parameter">
+                selection bias
+                <input type="number" id="selection-bias" />
+            </div>
+            <div class="parameter">
+                elites
+                <input type="number" id="elites" />
+            </div>
+        </div>
+
+        <div class="top-performers">
+
+            <div class="performer-row">
+                <div class="top-performer title">Top Individuals</div>
+                <span class="score title">Scores</span>
+            </div>
+
+            <div class="performer-row">
+                <div id="top-performer1" class="top-performer"></div>
+                <span id="score1" class="score"></span>
+            </div>
+            <div class="performer-row">
+                <div id="top-performer2" class="top-performer"></div>
+                <span id="score2" class="score"></span>
+            </div>
+            <div class="performer-row">
+                <div id="top-performer3" class="top-performer"></div>
+                <span id="score3" class="score"></span>
+            </div>
+            <div class="performer-row">
+                <div id="top-performer4" class="top-performer"></div>
+                <span id="score4" class="score"></span>
+            </div>
+            <div class="performer-row">
+                <div id="top-performer5" class="top-performer"></div>
+                <span id="score5" class="score"></span>
+            </div>
+            <div class="performer-row">
+                <div id="top-performer6" class="top-performer"></div>
+                <span id="score6" class="score"></span>
+            </div>
+            <div class="performer-row">
+                <div id="top-performer7" class="top-performer"></div>
+                <span id="score7" class="score"></span>
+            </div>
+            <div class="performer-row">
+                <div id="top-performer8" class="top-performer"></div>
+                <span id="score8" class="score"></span>
+            </div>
+            <div class="performer-row">
+                <div id="top-performer9" class="top-performer"></div>
+                <span id="score9" class="score"></span>
+            </div>
+            <div class="performer-row">
+                <div id="top-performer10" class="top-performer"></div>
+                <span id="score10" class="score"></span>
+            </div>
+        </div>
+
+    </div>
+    <script type="text/javascript" src="./app.js"></script>
+</body>
+
+</html>

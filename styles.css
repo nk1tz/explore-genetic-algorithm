@@ -1,0 +1,109 @@
+
+body {
+  padding: 3rem;
+  font-size: 10px;
+  --organic-font: 'Caveat Brush', cursive;
+  --main-font: 'Droid Sans', sans-serif;
+  font-family: var(--main-font);
+}
+
+.container {
+  text-align: center;
+}
+
+input {
+  height: 2.2rem;
+  width: 20rem;
+  font-size: 2rem;
+  font-family: var(--main-font);;
+  font-weight: 500;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+}
+
+.input__container {
+  display: flex;
+  flex-flow: column;
+  align-items: flex-start;
+}
+
+.input__container h2 {
+  font-family: var(--main-font);;
+  font-size: 1.3rem;
+  margin: 0;
+}
+
+.name-input {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+}
+
+.name-input input {
+  font-family: cursive;
+}
+
+.top-performer {
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: darkorange;
+  text-align: left;
+  width: 80%;
+  font-family: cursive;
+}
+
+.parameter {
+  font-size: 16px;
+  display: flex;
+  flex-flow: column;
+}
+
+.parameter input {
+  width: 100px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.top-performer.title {
+  color: black;
+  font-size: 20px;
+  font-family: var(--main-font);
+}
+
+.score.title {
+  font-size: 20px;
+  color: black;
+  font-family: var(--main-font);
+}
+
+.top-performers {
+  margin: 2rem 4rem;
+  display: flex;
+  flex-flow: column;
+  align-items: flex-start;
+}
+
+.performer-row {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.score {
+  color: darkblue;
+  font-size: 1.8rem;
+  width: 20%;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
