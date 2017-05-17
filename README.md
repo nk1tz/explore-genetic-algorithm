@@ -1,3 +1,5 @@
+http://nk1tz.com/explore-genetic-algorithm/
+
 ## Genetic Algorithm Explorer
 Explore an genetic algorithm (evolutionary search) by playing with the parameters during a solution landscape search.
 
