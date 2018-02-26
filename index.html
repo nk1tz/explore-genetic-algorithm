@@ -1,97 +1,533 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-
-<head>
+  <!-- note: your demo in this shim runs in an iframe with this content: https://gist.github.com/qfox/3cccc4f36c8319e09bb7 -->
+  <!--
+  (c) js1k.com 2018
+  Note: submissions belong to their respective owner, do not copy without their consent
+  -->
+  <head>
     <meta charset="utf-8">
-    <title>Name Evolver</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
-    <link href="https://fonts.googleapis.com/css?family=Caveat+Brush|Droid+Sans" rel="stylesheet">
-</head>
+    <meta
+  http-equiv="Content-Security-Policy"
+  content="
+    connect-src              'none'                                                             ;
+    default-src              'none'                                                             ;
+    font-src                 'none'                                                             ;
+    frame-src                'self'            data:                                            ;
+    child-src                'self'            data:                                            ;
+    img-src                  'self'            data:            ssl.google-analytics.com        ;
+    media-src                data:                                                              ;
+    object-src               data:                                                              ;
+    style-src                'self'            data:            'unsafe-inline'                 ;
+    script-src               'unsafe-inline'   'unsafe-eval'    www.google-analytics.com        ;
+  "
+  help="please report csp-related problems to valid demos!"
+>
 
-<body>
-    <div class="container">
+    <title>JS1k 2018 - NNNN - TITLE</title>
+    <meta name="author" content="YOU">
+    <link rel="icon" type="image/png" href="https://js1k.com/favicon.png">
+    <link rel="canonical" href="https://js1k.com/2018-coins/demo/NNNN">
+    <link rel="shortlink" href="https://js1k.com/NNNN">
+    <script>
+      // GA
+    </script>
+    <style>
+      /* https://qfox.nl/notes/333 */
+      body,html,iframe{margin:0;padding:0;border:0;width:100%;height:100%}
+      iframe{position:absolute;top:0;left:0;padding-top:50px;box-sizing:border-box}
+      header{position:relative;z-index:1;height:47px;padding-top:2px;border-bottom:1px solid #000;box-shadow:0 -10px 25px #ccc inset;background-color:#eee}
+      aside,div,h1,p{overflow:hidden;white-space:nowrap;text-overflow:ellipsis;text-align:center;font-size:16px;font-weight:inherit;line-height:22px;padding:0;margin:0;cursor:default}
+      aside,h1{display:inline}
+      a{color:#000;text-decoration:none;border-bottom:1px dashed #000}
+      a:hover{border-bottom:1px solid red}
+      a[href="0"]{text-decoration:line-through;pointer-events:none;border-bottom:0;color:#ccc}
+      .button{float:left;width:40px;height:40px;line-height:40px;text-align:center;padding:0;margin:2px 0 0 10px;border:1px solid #888;border-color:#ddd #888 #888 #ddd;font-family:sans-serif;font-size:30px;font-weight:700;cursor:pointer}
+      .button:hover{color:red;border-bottom-color:#888}
+      .r{margin-right:10px}
+      time{display:none}
+    </style>
+  </head>
+  <body>
+    <header>
+      <div>
+        <h1>
+          <a href="https://js1k.com/">JS1k</a>
+          <a href="https://js1k.com/2018-coins">2018</a>
+          <strong></strong> demo
+          &mdash;
+          "TITLE" by YOU
+        </h1>
+        <p>
+          <em>
+            FIRST PART OF YOUR DESC GOES HERE
+          </em>
+        </p>
+        <aside>
+          &mdash;
+          1024 bytes
+          &mdash;
+          <a href="https://js1k.com/2018-coins/details/NNNN">demo details</a>
+          &mdash;
+          <a href="https://js1k.com/2018-coins/demos">list of demos</a>
+          &mdash;
+          <a href="https://js1k.com/NNNN" title="short link for your mobile devices" rel="nofollow">js1k.com/NNNN</a>
+          <time datetime="NOW" pubdate>NOW</time>
+        </aside>
+      </div>
 
-        <div class="top-bar">
-            <div class="input__container">
-                <h2>Your name</h2>
-                <div class="name-input">
-                    <input type="text" id="textBox" />
-                    <button id="start-evolve">Evolve Me</button>
-                </div>
-            </div>
-            <div class="parameter">
-                mutation rate
-                <input type="number" id="mutation-rate" />
-            </div>
-            <div class="parameter">
-                parents per child
-                <input type="number" id="sex-number" />
-            </div>
-            <div class="parameter">
-                population size
-                <input type="number" id="pop-size" />
-            </div>
-            <div class="parameter">
-                selection bias
-                <input type="number" id="selection-bias" />
-            </div>
-            <div class="parameter">
-                elites
-                <input type="number" id="elites" />
-            </div>
-        </div>
+      <a href="500" class="button p">&Larr;</a>
+      <a href="502" class="button n">&Rarr;</a>
+    </header>
 
-        <div class="top-performers">
+    <script type="shim">
+      // this is the SHIM (will be ran in the context of the iframe...)
 
-            <div class="performer-row">
-                <div class="top-performer title">Top Individuals</div>
-                <span class="score title">Scores</span>
-            </div>
+      // unprefix some popular vendor prefixed things (but stick to their original name)
+      iwin.AudioContext = iwin.AudioContext || iwin.webkitAudioContext; // ios8 unmutes audio only during the first user triggered event with sound
+      iwin.requestAnimationFrame = iwin.requestAnimationFrame || iwin.mozRequestAnimationFrame || iwin.webkitRequestAnimationFrame || iwin.msRequestAnimationFrame || function(f){ iwin.setTimeout(f, 1000/30); };
+      canvas.requestPointerLock = canvas.requestPointerLock || canvas.mozRequestPointerLock || canvas.webkitRequestPointerLock;
+      navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia;
+      if (typeof OscillatorNode !== 'undefined' && OscillatorNode.prototype) {
+        OscillatorNode.prototype.start = OscillatorNode.prototype.start || OscillatorNode.prototype.noteOn;
+        OscillatorNode.prototype.stop = OscillatorNode.prototype.stop || OscillatorNode.prototype.noteOff;
+      }
 
-            <div class="performer-row">
-                <div id="top-performer1" class="top-performer"></div>
-                <span id="score1" class="score"></span>
-            </div>
-            <div class="performer-row">
-                <div id="top-performer2" class="top-performer"></div>
-                <span id="score2" class="score"></span>
-            </div>
-            <div class="performer-row">
-                <div id="top-performer3" class="top-performer"></div>
-                <span id="score3" class="score"></span>
-            </div>
-            <div class="performer-row">
-                <div id="top-performer4" class="top-performer"></div>
-                <span id="score4" class="score"></span>
-            </div>
-            <div class="performer-row">
-                <div id="top-performer5" class="top-performer"></div>
-                <span id="score5" class="score"></span>
-            </div>
-            <div class="performer-row">
-                <div id="top-performer6" class="top-performer"></div>
-                <span id="score6" class="score"></span>
-            </div>
-            <div class="performer-row">
-                <div id="top-performer7" class="top-performer"></div>
-                <span id="score7" class="score"></span>
-            </div>
-            <div class="performer-row">
-                <div id="top-performer8" class="top-performer"></div>
-                <span id="score8" class="score"></span>
-            </div>
-            <div class="performer-row">
-                <div id="top-performer9" class="top-performer"></div>
-                <span id="score9" class="score"></span>
-            </div>
-            <div class="performer-row">
-                <div id="top-performer10" class="top-performer"></div>
-                <span id="score10" class="score"></span>
-            </div>
-        </div>
+      a = canvas;
+      b = idoc.body;
+      d = idoc.document;
 
-    </div>
-    <script type="text/javascript" src="./app.js"></script>
-</body>
+      if (!TOKEN_WEBGL) iwin.c = canvas.getContext('2d');
+      else iwin.g = (function () {
+        iwin.onorientationchange = iwin.onresize = null;
+        try {
+          var o = { antialias: true, stencil: true };
+          var gl = canvas.getContext('webgl', o) || canvas.getContext('experimental-webgl', o);
 
+          // keep in scope, must not be garbage collected
+          iwin.__glExts =
+            [ 'OES_texture_float', 'OES_texture_float_linear', 'OES_standard_derivatives',
+              'EXT_texture_filter_anisotropic', 'MOZ_EXT_texture_filter_anisotropic', 'WEBKIT_EXT_texture_filter_anisotropic',
+              'WEBGL_compressed_texture_s3tc', 'MOZ_WEBGL_compressed_texture_s3tc', 'WEBKIT_WEBGL_compressed_texture_s3tc'
+            ].map(function(ext) {
+                return gl.getExtension(ext);
+              });
+        } catch (e) {
+          idoc.body.innerHTML = 'WebGL not supported.';
+          iwin.a=iwin.b=iwin.c=iwin.d=null;
+          throw e;
+        }
+
+        return gl;
+      })();
+    </script>
+    <script>
+      // submission form configurables:
+
+      // enable canvas shim at all? (2d/3d). other settings are ignored if this is false.
+      var TOKEN_CANVAS_SHIM = false;
+      // true enables webgl shim (exposes `g`), false enables canvas shim (exposes `c`)
+      var TOKEN_WEBGL = false;
+      // px, 0 means always 100%
+      var TOKEN_MAX_WIDTH = 0;
+      // px, 0 means always 100%
+      var TOKEN_MAX_HEIGHT = 0;
+      // should the size be smaller than specified if viewport is smaller?
+      var TOKEN_MAX_100P = true;
+      // only if width<100%
+      var TOKEN_CENTER_CANVAS = false;
+      // "press" reload button on orientation change?
+      var TOKEN_RELOAD_ONORIENTATIONCHANGE = true;
+    </script>
+    <script type="demo">
+      var target = "";
+      var lowestScore = Infinity;
+      var topPerformerGenome = [];
+      var mutationRate = 0.009;
+      var sexNumber = 4;
+      var sBias = 0.8;
+      var popSize = 30;
+      var elites = 0;
+
+      // Define character space
+      const CHAR_SPACE_MIN = 32;
+      const CHAR_SPACE_MAX = 126;
+
+      appendFields();
+
+      // Define nodes
+      var topPerformerNode1 = document.getElementById('top-performer1');
+      var topPerformerNode2 = document.getElementById('top-performer2');
+      var topPerformerNode3 = document.getElementById('top-performer3');
+      var topPerformerNode4 = document.getElementById('top-performer4');
+      var topPerformerNode5 = document.getElementById('top-performer5');
+      var topPerformerNode6 = document.getElementById('top-performer6');
+      var topPerformerNode7 = document.getElementById('top-performer7');
+      var topPerformerNode8 = document.getElementById('top-performer8');
+      var topPerformerNode9 = document.getElementById('top-performer9');
+      var topPerformerNode10 = document.getElementById('top-performer10');
+
+      var scoreNode1 = document.getElementById('score1');
+      var scoreNode2 = document.getElementById('score2');
+      var scoreNode3 = document.getElementById('score3');
+      var scoreNode4 = document.getElementById('score4');
+      var scoreNode5 = document.getElementById('score5');
+      var scoreNode6 = document.getElementById('score6');
+      var scoreNode7 = document.getElementById('score7');
+      var scoreNode8 = document.getElementById('score8');
+      var scoreNode9 = document.getElementById('score9');
+      var scoreNode10 = document.getElementById('score10');
+
+      var inputNode = document.getElementById('textBox');
+      var evolveStartNode = document.getElementById('start-evolve');
+      var mutationRateNode = document.getElementById('mutation-rate');
+      var sexNumberNode = document.getElementById('sex-number');
+      var popSizeNode = document.getElementById('pop-size');
+      var selectionBiasNode = document.getElementById('selection-bias');
+      var elitesNode = document.getElementById('elites');
+
+      console.log(evolveStartNode)
+
+      // Click Event
+      evolveStartNode.onclick = () => beginEvolution(inputNode.value);
+      mutationRateNode.onchange = () => {mutationRate = mutationRateNode.value};
+      selectionBiasNode.onchange = () => {sBias = selectionBiasNode.value};
+      sexNumberNode.onchange = () => {sexNumber = sexNumberNode.value};
+      popSizeNode.onchange = () => {popSize = popSizeNode.value};
+      elitesNode.onchange = () => {elites = elitesNode.value};
+
+      // Set up default display
+      mutationRateNode.value = mutationRate;
+      sexNumberNode.value = sexNumber;
+      popSizeNode.value = popSize;
+      selectionBiasNode.value = sBias;
+      elitesNode.value = elites;
+
+      var document = window.d;
+
+      function appendFields() {
+        let container = document.createElement('div')
+        container.setAttribute('class', 'container')
+        document.body.appendChild(container)
+
+        let topBar = document.createElement('div')
+        topBar.setAttribute('class', 'top-bar')
+        topBar.setAttribute('style', 'display:flex; flex-flow:row nowrap; justify-content:space-evenly')
+        container.appendChild(topBar)
+
+        let inputContainer = document.createElement('div')
+        inputContainer.setAttribute('class', 'input__container')
+        topBar.appendChild(inputContainer)
+
+        let h3 = document.createElement('h3')
+        h3.appendChild(document.createTextNode("Your name"))
+        inputContainer.appendChild(h3)
+
+        let nameInput = document.createElement('div')
+        nameInput.setAttribute('class', 'name-input')
+        inputContainer.appendChild(nameInput)
+
+        let inputName = document.createElement('input')
+        inputName.setAttribute('id', 'textBox')
+        inputName.setAttribute('type', 'text')
+        nameInput.appendChild(inputName)
+
+        let button = document.createElement('button')
+        button.setAttribute('id', 'start-evolve')
+        button.appendChild(document.createTextNode("Evolve Me"))
+        nameInput.appendChild(button)
+
+        topBar.appendChild(createParameterNode('mutation rate', 'mutation-rate'))
+
+        topBar.appendChild(createParameterNode('parents per child', 'sex-number'))
+
+        topBar.appendChild(createParameterNode('population size', 'pop-size'))
+
+        topBar.appendChild(createParameterNode('selection bias', 'selection-bias'))
+
+        topBar.appendChild(createParameterNode('elites', 'elites'))
+
+        let topPerformers = document.createElement('div')
+        topPerformers.setAttribute('class', 'top-performers')
+        container.appendChild(topPerformers)
+
+        createPerformerNodes(10).forEach(p => {
+          topPerformers.appendChild(p)
+        })
+      }
+
+      function createParameterNode(name, id) {
+        let p = document.createElement('div')
+        p.setAttribute('class', 'parameter')
+        p.setAttribute('style', 'width:128px; padding-top: 24px;')
+        p.appendChild(document.createTextNode(name))
+        let i = document.createElement('input')
+        i.setAttribute('id', id)
+        i.setAttribute('type', 'number')
+        p.appendChild(i)
+        return p
+      }
+
+      function createPerformerNodes(n) {
+        function createPerformer(i) {
+          let p = document.createElement('div')
+          p.setAttribute('class', 'performer-row')
+          let t = document.createElement('div')
+          t.setAttribute('class', 'top-performer')
+          t.setAttribute('id', 'top-performer'+i)
+          let s = document.createElement('div')
+          s.setAttribute('class', 'score')
+          s.setAttribute('id', 'score'+i)
+          p.appendChild(t)
+          p.appendChild(s)
+          return p
+        }
+        let arr = [];
+        for (var i = 1; i <= n; i++){
+          arr.push(createPerformer(i))
+        }
+        return arr
+      }
+
+      function beginEvolution(target) {
+        topPerformerNode1.style.color = 'darkorange';
+        let targetGenome = getGenomeFromString(target)
+        let initialPop = generateRandomPopulationOfSize(targetGenome.length, popSize);
+        let initialScores = getScoresForEntirePopulation(initialPop, targetGenome)
+        evolution(targetGenome, initialPop, initialScores);
+      }
+
+
+      function evolution(targetGenome, pop, scores) {
+        let [sortedPop, sortedScores] = getSortedPopAndScores(scores, pop);
+        pop = generateNewPopulation(sortedPop, sortedScores);
+        scores = getScoresForEntirePopulation(pop, targetGenome);
+        console.log('generations')
+
+        if(sortedScores[0] > 0) {
+          setTimeout(()=>evolution(targetGenome, pop, scores), 0)
+          displayData(sortedPop, sortedScores);
+        }
+        else {
+          displayData(sortedPop, sortedScores);
+          topPerformerNode1.style.color = 'darkgreen';
+          return;
+        }
+      }
+
+
+      function displayData(sortedPop, sortedScores) {
+        topPerformerNode1.textContent = getStringFromGenome(sortedPop[0]);
+        topPerformerNode2.textContent = getStringFromGenome(sortedPop[1]);
+        topPerformerNode3.textContent = getStringFromGenome(sortedPop[2]);
+        topPerformerNode4.textContent = getStringFromGenome(sortedPop[3]);
+        topPerformerNode5.textContent = getStringFromGenome(sortedPop[4]);
+        topPerformerNode6.textContent = getStringFromGenome(sortedPop[5]);
+        topPerformerNode7.textContent = getStringFromGenome(sortedPop[6]);
+        topPerformerNode8.textContent = getStringFromGenome(sortedPop[7]);
+        topPerformerNode9.textContent = getStringFromGenome(sortedPop[8]);
+        topPerformerNode10.textContent = getStringFromGenome(sortedPop[9]);
+        scoreNode1.textContent = sortedScores[0];
+        scoreNode2.textContent = sortedScores[1];
+        scoreNode3.textContent = sortedScores[2];
+        scoreNode4.textContent = sortedScores[3];
+        scoreNode5.textContent = sortedScores[4];
+        scoreNode6.textContent = sortedScores[5];
+        scoreNode7.textContent = sortedScores[6];
+        scoreNode8.textContent = sortedScores[7];
+        scoreNode9.textContent = sortedScores[8];
+        scoreNode10.textContent = sortedScores[9];
+      }
+
+
+      function generateNewPopulation(sortedPop, sortedScores) {
+        let newGeneration = [];
+        let p = 0;
+        while(p < popSize) {
+          if(p < elites) {
+            newGeneration.push(sortedPop[p])
+          }
+          else {
+            newGeneration.push(
+              mateGenomesGetNewGenome(
+                ...selectNindividuals(sortedPop, sortedScores)
+              )
+            )
+          }
+          p++;
+        }
+        return newGeneration;
+      }
+
+
+      function getSortedPopAndScores(scoresArray, popArray) {
+        //1) combine the arrays:
+        var list = [];
+        for (var j in scoresArray)
+            list.push({'genome': popArray[j], 'score': scoresArray[j]});
+        //2) sort:
+        list.sort(function(a, b) {
+            return ((a.score < b.score) ? -1 : ((a.score == b.score) ? 0 : 1));
+        });
+        //3) separate them back out:
+        for (var k = 0; k < list.length; k++) {
+            popArray[k] = list[k].genome;
+            scoresArray[k] = list[k].score;
+        }
+        return [popArray, scoresArray];
+      }
+
+
+      function selectNindividuals(popArray, scoresArray) {
+        let weightsArray = getWeights(scoresArray);
+        let selectedIndividuals = [];
+        let s = 0;
+        while (s < sexNumber) {
+          selectedIndividuals.push(popArray[weightedRandSelection(weightsArray)]);
+          s++;
+        }
+        return selectedIndividuals;
+      }
+
+
+      function weightedRandSelection(weights) {
+        var sumOfWeights = weights.reduce((a,b)=>a+b);
+        var i, sum = 0, r = Math.random()*sumOfWeights;
+        for (i in weights) {
+          sum += weights[i];
+          if (r <= sum) return i;
+        }
+      }
+
+
+      function getWeights(scores) {
+        return scores.map(s => 1/(s^sBias));
+      }
+
+
+      function mutateGenome(genome) {
+        return genome.map(n => {
+          if(getRandomInt(0, 100) <= mutationRate*100) {
+            let coin = Math.random();
+            if(coin < 0.3) {
+              return n + 1;
+            }
+            else if(coin >= 0.3 && coin < 0.6) {
+              return n - 1;
+            }
+            else if(coin >= 0.6 && coin < 0.75) {
+              return n + 2;
+            }
+            else if(coin >= 0.75 && coin < 0.9) {
+              return n - 2;
+            }
+            else {
+              return getRandomInt(CHAR_SPACE_MIN, CHAR_SPACE_MAX);
+            }
+          }
+          return n
+        })
+      }
+
+
+      function mateGenomesGetNewGenome(...args) {
+        let n = args.length;
+        let chunk = Math.floor(args[0].length / n);
+        let m = 0;
+        let newGenome = [];
+        while (m < n){
+          if(m === n-1){
+            newGenome = newGenome.concat(args[m].slice(m*chunk, args[0].length));
+          }
+          else {
+            newGenome = newGenome.concat(args[m].slice(m*chunk, (m+1)*chunk));
+          }
+          m++;
+        }
+        return mutateGenome(newGenome);
+      }
+
+
+      function getScoresForEntirePopulation(population, targetGenome) {
+        let newScores = [];
+        let j = 0;
+        while (j < population.length) {
+          newScores.push(compare2Genomes(population[j], targetGenome));
+          j++;
+        }
+        return newScores;
+      }
+
+
+      function generateRandomPopulationOfSize(individualLength) {
+        let randPopulation = [];
+        let n = 0;
+        let randGenome;
+        while (n < popSize) {
+          randPopulation.push(generateRandomGenomeOfLength(individualLength));
+          n++;
+        }
+        return randPopulation;
+      }
+
+
+      function generateRandomGenomeOfLength(length) {
+        let newGenome = [];
+        let i = 0;
+        while (i < length) {
+          newGenome.push(getRandomInt(CHAR_SPACE_MIN, CHAR_SPACE_MAX));
+          i++;
+        }
+        return newGenome;
+      }
+
+
+      function getGenomeFromString(str) {
+        return str.split("").map(char => char.charCodeAt(0))
+      }
+
+
+      function getStringFromGenome(genome) {
+        return String.fromCharCode(...genome);
+      }
+
+
+      function compare2Genomes(g1, g2) {
+        return g1.reduce((acc, curr, i) => acc + Math.abs(curr - g2[i]), 0);
+      }
+
+
+      function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+
+
+    </script>
+    <script>
+      (function(){var doc=document;var header=doc.getElementsByTagName("header")[0];var firstChild=header.firstChild;var p=doc.getElementsByClassName("p")[0];
+      var n=doc.getElementsByClassName("n")[0];header.insertBefore(p,firstChild);header.insertBefore(n,firstChild);header.appendChild(doc.getElementsByTagName
+      ("p")[0])})();(function reload(fullscreen){var doc=document;var header=doc.getElementsByTagName("header")[0];var iframe=doc.createElement("iframe");doc.
+      body.appendChild(iframe);var iwin=iframe.contentWindow;var idoc=iframe.contentDocument;idoc.open();idoc.close();idoc.write("<!doctype html>"+'<html st'+
+      'yle="margin: 0; padding: 0; border: 0;'+(TOKEN_CANVAS_SHIM?' width: 100%; height: 100%;':'')+'">'+"<head>"+'<meta charset="utf-8">'+'<body style="mar'+
+      'gin: 0; padding: 0; border: 0;'+(TOKEN_CANVAS_SHIM?' width: 100%; height: 100%;':'')+'">'+(TOKEN_CANVAS_SHIM?'<canvas style="display: block;'+(
+      TOKEN_CENTER_CANVAS?" margin: auto;":"")+'"></canvas>':"")+"");if(TOKEN_CANVAS_SHIM){var canvas=idoc.getElementsByTagName("canvas")[0];var cs=canvas.style
+      ;idoc.body.clientWidth;cs.width=(canvas.width=Math.max(Math.min(TOKEN_MAX_WIDTH||innerWidth,innerWidth),0)||0)+"px";cs.height=(canvas.height=Math.max(
+      Math.min(TOKEN_MAX_HEIGHT||innerHeight-50,innerHeight-50),0)||0)+"px"}if(TOKEN_RELOAD_ONORIENTATIONCHANGE)onorientationchange=reloadClick;iwin.AudioContext
+      =iwin.AudioContext||iwin.webkitAudioContext;iwin.requestAnimationFrame=iwin.requestAnimationFrame||iwin.mozRequestAnimationFrame||iwin.
+      webkitRequestAnimationFrame||iwin.msRequestAnimationFrame||function(f){iwin.setTimeout(f,1E3/30)};if(TOKEN_CANVAS_SHIM)canvas.requestPointerLock=canvas.
+      requestPointerLock||canvas.mozRequestPointerLock||canvas.webkitRequestPointerLock;idoc.body.requestPointerLock=idoc.body.requestPointerLock||idoc.body.
+      mozRequestPointerLock||idoc.body.webkitRequestPointerLock;navigator.getUserMedia=navigator.getUserMedia||navigator.webkitGetUserMedia||navigator.
+      mozGetUserMedia||navigator.msGetUserMedia;var iwo=iwin.OscillatorNode&&iwin.OscillatorNode.prototype;iwo&&(iwo.start=iwo.start||iwo.noteOn)&&(iwo.stop=iwo
+      .stop||iwo.noteOff);if(TOKEN_CANVAS_SHIM)iwin.a=canvas;iwin.b=idoc.body;d=idoc;if(TOKEN_CANVAS_SHIM){if(!TOKEN_WEBGL)iwin.c=canvas.getContext("2d");if(
+      TOKEN_WEBGL)iwin.g=function(){iwin.onorientationchange=iwin.onresize=null;try{var o={antialias:true,stencil:true};var gl=canvas.getContext("webgl",o)||
+      canvas.getContext("experimental-webgl",o);iwin.__glExts=["OES_texture_float","OES_texture_float_linear","OES_standard_derivatives","EXT_texture_filter_"+
+      "anisotropic","MOZ_EXT_texture_filter_anisotropic","WEBKIT_EXT_texture_filter_anisotropic","WEBGL_compressed_texture_s3tc","MOZ_WEBGL_compressed_textur"+
+      "e_s3tc","WEBKIT_WEBGL_compressed_texture_s3tc"].map(function(ext){return gl.getExtension(ext)})}catch(e){idoc.body.innerHTML="WebGL not supported.";iwin
+      .a=iwin.b=iwin.c=iwin.d=null;throw e;}return gl}()}var demo=idoc.createElement("script");demo.textContent=doc.querySelector('script[type="demo"]').textContent;
+      idoc.body.appendChild(demo);idoc.close();iframe.contentWindow.focus();var firstLine=doc.getElementsByTagName("div")[0];function reloadClick(b)
+      {doc.body.removeChild(iframe);r.parentElement.removeChild(r);iframe=null;r=null;idoc=null;header=null;reload(b)}window.reload=reloadClick;var r=doc.
+      createElement("div");r.innerHTML="&#8635;";r.className="button r";r.title="restart just the demo (local, without remote fetch)";r.onclick=reloadClick;
+      header.insertBefore(r,firstLine)})();
+    </script>
+  </body>
 </html>

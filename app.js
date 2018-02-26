@@ -11,6 +11,8 @@ var elites = 0;
 const CHAR_SPACE_MIN = 32;
 const CHAR_SPACE_MAX = 126;
 
+appendFields();
+
 // Define nodes
 var topPerformerNode1 = document.getElementById('top-performer1');
 var topPerformerNode2 = document.getElementById('top-performer2');
@@ -42,6 +44,7 @@ var popSizeNode = document.getElementById('pop-size');
 var selectionBiasNode = document.getElementById('selection-bias');
 var elitesNode = document.getElementById('elites');
 
+console.log(evolveStartNode)
 
 // Click Event
 evolveStartNode.onclick = () => beginEvolution(inputNode.value);
@@ -58,6 +61,90 @@ popSizeNode.value = popSize;
 selectionBiasNode.value = sBias;
 elitesNode.value = elites;
 
+var document = window.d;
+
+function appendFields() {
+  let container = document.createElement('div')
+  container.setAttribute('class', 'container')
+  document.body.appendChild(container)
+
+  let topBar = document.createElement('div')
+  topBar.setAttribute('class', 'top-bar')
+  topBar.setAttribute('style', 'display:flex;flex-flow:row nowrap;')
+  container.appendChild(topBar)
+
+  let inputContainer = document.createElement('div')
+  inputContainer.setAttribute('class', 'input__container')
+  topBar.appendChild(inputContainer)
+
+  let h2 = document.createElement('h2')
+  h2.appendChild(document.createTextNode("Your name"))
+  inputContainer.appendChild(h2)
+
+  let nameInput = document.createElement('div')
+  nameInput.setAttribute('class', 'name-input')
+  inputContainer.appendChild(nameInput)
+
+  let inputName = document.createElement('input')
+  inputName.setAttribute('id', 'textBox')
+  inputName.setAttribute('type', 'text')
+  nameInput.appendChild(inputName)
+
+  let button = document.createElement('button')
+  button.setAttribute('id', 'start-evolve')
+  button.appendChild(document.createTextNode("Evolve Me"))
+  nameInput.appendChild(button)
+
+  topBar.appendChild(createParameterNode('mutation rate', 'mutation-rate'))
+
+  topBar.appendChild(createParameterNode('parents per child', 'sex-number'))
+
+  topBar.appendChild(createParameterNode('population size', 'pop-size'))
+
+  topBar.appendChild(createParameterNode('selection bias', 'selection-bias'))
+
+  topBar.appendChild(createParameterNode('elites', 'elites'))
+
+  let topPerformers = document.createElement('div')
+  topPerformers.setAttribute('class', 'top-performers')
+  container.appendChild(topPerformers)
+
+  createPerformerNodes(10).forEach(p => {
+    topPerformers.appendChild(p)
+  })
+}
+
+function createParameterNode(name, id) {
+  let p = document.createElement('div')
+  p.setAttribute('class', 'parameter')
+  p.appendChild(document.createTextNode(name))
+  let i = document.createElement('input')
+  i.setAttribute('id', id)
+  i.setAttribute('type', 'number')
+  p.appendChild(i)
+  return p
+}
+
+function createPerformerNodes(n) {
+  function createPerformer(i) {
+    let p = document.createElement('div')
+    p.setAttribute('class', 'performer-row')
+    let t = document.createElement('div')
+    t.setAttribute('class', 'top-performer')
+    t.setAttribute('id', 'top-performer'+i)
+    let s = document.createElement('div')
+    s.setAttribute('class', 'score')
+    s.setAttribute('id', 'score'+i)
+    p.appendChild(t)
+    p.appendChild(s)
+    return p
+  }
+  let arr = [];
+  for (var i = 1; i <= n; i++){
+    arr.push(createPerformer(i))
+  }
+  return arr
+}
 
 function beginEvolution(target) {
   topPerformerNode1.style.color = 'darkorange';
